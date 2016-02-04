@@ -1,18 +1,23 @@
 Player player;
 ArrayList <Collider> colliders;
 PVector aim;
+ArrayList <Enemy> enemies;
 
 void setup() {
   size(500, 500);
   player=new Player();
   aim = new PVector (width / 2, height / 2);
   colliders = new ArrayList<Collider> ();
+  enemies = new ArrayList<Enemy> ();
 }
 
 void draw() {
   background(0);
   for (Collider coll : colliders) {
     coll.update ();
+  }
+   for (Enemy enm: enemies) {
+    enm.drawEnemy();
   }
   player.draw();
   player.update();
@@ -22,6 +27,7 @@ void draw() {
     }
   }
 }
+
 void mousePressed () {
   colliders.add (new Collider(new PVector (player.pos.x, player.pos.y), aim, 5, 10, 3));
   aim.set(mouseX, mouseY);

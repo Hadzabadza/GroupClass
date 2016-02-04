@@ -15,11 +15,10 @@ class Collider {
     vel2.mult(speed);
     pos.add(vel2);
     ellipse(pos.x, pos.y, size, size);
-    
   }
   void MoveInDirection (PVector throughPoint) {
-   target = PVector.sub (throughPoint, pos).normalize ();
-   target.mult (500000);
-   target.add (pos);
+    target = PVector.sub (throughPoint, pos).normalize ();
+    target.mult (500000);
+    target.add (pos);
   }
 }

@@ -27,7 +27,6 @@ class Player {
     line(mouseX-12.5, mouseY, mouseX+12.5, mouseY);
     line(mouseX, mouseY-12.5, mouseX, mouseY+12.5);
     line(pos.x, pos.y, mouseX, mouseY);
-    line(pos.x+20*
     fill(255);
     stroke(0);
     ellipse (pos.x, pos.y, 30, 30);
