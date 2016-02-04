@@ -1,12 +1,17 @@
 class Player {
   PVector pos, speed;
-  float health;
+  float health, maxJump;
+  int ammo, warp;
 
   Player() {
     pos=new PVector();
     speed = new PVector();
     pos.x=width/2;
     pos.y=height/2;
+    maxJump=150;
+    health=100;
+    ammo=50;
+    warp=3;
   }
   Player(float x, float y) {
     pos=new PVector();
@@ -22,6 +27,7 @@ class Player {
     line(mouseX-12.5, mouseY, mouseX+12.5, mouseY);
     line(mouseX, mouseY-12.5, mouseX, mouseY+12.5);
     line(pos.x, pos.y, mouseX, mouseY);
+    line(pos.x+20*
     fill(255);
     stroke(0);
     ellipse (pos.x, pos.y, 30, 30);

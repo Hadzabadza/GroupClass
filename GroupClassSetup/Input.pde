@@ -1,4 +1,4 @@
-boolean[] move={false,false,false,false};
+boolean[] move={false, false, false, false};
 
 void keyPressed() {
   if ((key == 'a')||(keyCode==LEFT)||(key=='A'))  move[0] = true;
