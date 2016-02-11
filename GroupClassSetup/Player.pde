@@ -43,7 +43,7 @@ class Player {
         stroke(100, 100, 255);
       } else
       {
-        stroke(255, 0, 0);
+        stroke(255, 100, 255);
       }
     }
     if (dist(pos.x, pos.y, mouseX, mouseY)>temp.mag()) {
