@@ -18,4 +18,43 @@ void keyReleased() {
     enemies.add(new Enemy());
   }
   
+  if ((key=='r')||(key=='R')) {
+    //restarts the game
+    if (!player.isAlive())
+    {
+      player=new Player();
+      colliders = new ArrayList<Collider> ();
+      enemies = new ArrayList<Enemy> ();
+      introTimer=240;
+    }
+  }
+  //DEBUG
+  if(key=='x')
+  {
+    player.health=0;
+  }
+}
+
+void mousePressed () {
+  if (mouseButton==LEFT)
+  {
+    if (player.ammo>0)
+    {
+      colliders.add (new Collider(new PVector (player.pos.x, player.pos.y), aim, 5, 10, 3));
+      colliders.get (colliders.size()-1).MoveInDirection (aim);
+      player.ammo--;
+    }
+  }
+
+  if (mouseButton==RIGHT)
+  {
+    //makes the player jump to maxJump distance in direction of cursor, or to cursor if it is closer than maxJump
+    player.blink();
+  }
+
+  if (introTimer>0)
+  {
+    //skips the intro
+    introTimer=0;
+  }
 }
