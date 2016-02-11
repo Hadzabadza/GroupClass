@@ -60,6 +60,5 @@ void mousePressed () {
   if (mouseButton==RIGHT)
   {
   player.blink();
-  println("jump!");
   }
 }

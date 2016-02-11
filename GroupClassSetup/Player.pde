@@ -1,7 +1,7 @@
 class Player {
   PVector pos, speed, jumpDir, temp;
   float health, maxJump;
-  int ammo, charge;
+  int ammo, jumps, charge;
 
   Player() {
     pos=new PVector();
@@ -14,6 +14,7 @@ class Player {
     health=100;
     ammo=50;
     charge=100;
+    jumps=4;
   }
 
   Player(float x, float y) {
@@ -38,15 +39,31 @@ class Player {
       stroke(255, 100, 255, 255*charge/100);
     } else
     {
-      stroke(100, 100, 255);
+      if (jumps>0) {
+        stroke(100, 100, 255);
+      } else
+      {
+        stroke(255, 0, 0);
+      }
     }
     if (dist(pos.x, pos.y, mouseX, mouseY)>temp.mag()) {
-      line(pos.x-20*jumpDir.y, pos.y+20*jumpDir.x, pos.x-20*jumpDir.y+jumpDir.x*maxJump, pos.y+20*jumpDir.x+jumpDir.y*maxJump);
-      line(pos.x+20*jumpDir.y, pos.y-20*jumpDir.x, pos.x+20*jumpDir.y+jumpDir.x*maxJump, pos.y-20*jumpDir.x+jumpDir.y*maxJump);
+      if (jumps>0) {
+        line(pos.x-20*jumpDir.y, pos.y+20*jumpDir.x, pos.x-20*jumpDir.y+jumpDir.x*maxJump, pos.y+20*jumpDir.x+jumpDir.y*maxJump);
+        line(pos.x+20*jumpDir.y, pos.y-20*jumpDir.x, pos.x+20*jumpDir.y+jumpDir.x*maxJump, pos.y-20*jumpDir.x+jumpDir.y*maxJump);
+      } else
+      {
+        line(pos.x-20*jumpDir.y, pos.y+20*jumpDir.x, pos.x+20*jumpDir.y+jumpDir.x*maxJump, pos.y-20*jumpDir.x+jumpDir.y*maxJump);
+        line(pos.x+20*jumpDir.y, pos.y-20*jumpDir.x, pos.x-20*jumpDir.y+jumpDir.x*maxJump, pos.y+20*jumpDir.x+jumpDir.y*maxJump);
+      }
     } else
     {
-      line(pos.x-20*jumpDir.y, pos.y+20*jumpDir.x, mouseX-20*jumpDir.y, mouseY+20*jumpDir.x);
-      line(pos.x+20*jumpDir.y, pos.y-20*jumpDir.x, mouseX+20*jumpDir.y, mouseY-20*jumpDir.x);
+      if (jumps>0) {
+        line(pos.x-20*jumpDir.y, pos.y+20*jumpDir.x, mouseX-20*jumpDir.y, mouseY+20*jumpDir.x);
+        line(pos.x+20*jumpDir.y, pos.y-20*jumpDir.x, mouseX+20*jumpDir.y, mouseY-20*jumpDir.x);
+      } else {
+        line(pos.x-20*jumpDir.y, pos.y+20*jumpDir.x, mouseX+20*jumpDir.y, mouseY-20*jumpDir.x);
+        line(pos.x+20*jumpDir.y, pos.y-20*jumpDir.x, mouseX-20*jumpDir.y, mouseY+20*jumpDir.x);
+      }
     }
     fill(255);
     stroke(0);
@@ -60,10 +77,11 @@ class Player {
   void blink() {
     temp.x=jumpDir.x*maxJump;
     temp.y=jumpDir.y*maxJump;
-    if (charge==100) {
+    if ((charge==100)&&(jumps>0)) {
       if (dist(pos.x, pos.y, mouseX, mouseY)>temp.mag()) {
         pos.add(temp);
         charge=0;
+        jumps--;
       } else
       {
         pos.x=mouseX;
@@ -133,5 +151,11 @@ class Player {
         }
       }
     }
+  }
+  boolean isAlive() {
+    if (health>0)
+      return true;
+    else
+      return false;
   }
 }
