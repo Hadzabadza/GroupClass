@@ -8,6 +8,7 @@ class Enemy
   //constructor
   Enemy()
   {
+    println("hello");
     //gets a random position out of the window for the enemy
     enemyPos = initialPos();
     //gets a random enemy
@@ -120,4 +121,18 @@ class Enemy
     return initialPos;
   }
   
+  PVector enemyPos()
+  {
+    return enemyPos;
+  }
+  
+  void enemyHit()
+  {
+    healt--;
+  }
+  
+  int enemyHealt()
+  {
+    return healt;
+  }
 }
