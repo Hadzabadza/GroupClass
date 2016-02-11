@@ -1,93 +1,123 @@
 class Enemy
 {
+  //class variables
   PVector playerPos, enemyPos, newEnemyPos, bulletPos, bulletDir, direction;
-  int x, y, speed, healt, randomShoot, randomEnemy;
+  int x, y, speed, healt, randomEnemy;
   color enemyColor;
-  int axis[] = new int[2];
-  boolean shoot=false;
+  
+  //constructor
   Enemy()
   {
-    axis=initialPos();
-    enemyPos = new PVector(axis[0], axis[1]);
-    randomEnemy=int(random(1, 7));
+    //gets a random position out of the window for the enemy
+    enemyPos = initialPos();
+    //gets a random enemy
+    randomEnemy=int(random(1,6));
+    //50% on standard enemy
     if (randomEnemy<4)
     {
+      //enemy's speed
       speed=2;
+      //enemy's healt
       healt=2;
+      //enemy's color
       enemyColor= color(0, 255, 0);
-    } else if (randomEnemy==4)
+    }
+    //25% on slow but hard enemy
+    else if (randomEnemy==4)
     {
+      //enemy's speed
       speed=1;
+      //enemy's healt
       healt=3;
+      //enemy's color
       enemyColor=color(255, 0, 0);
-    } else if (randomEnemy==5)
+    }
+    //25% on fast but easy enemy
+    else if (randomEnemy==5)
     {
+      //enemy's speed
       speed=3;
+      //enemy's healt
       healt=1;
-      enemyColor=color(0, 0, 255);
-    } else if (randomEnemy==6)
-    {
+      //enemy's color
+      enemyColor=color(0,0,255);
     }
   }
-
-  void move(int playerX, int playerY)
+  
+  // function to make the enemy move towards the player position
+  void move(float playerX, float playerY)
   {
-    playerPos = new PVector(playerX, playerY);
-    direction = new PVector(playerPos.x-enemyPos.x, playerPos.y-enemyPos.y);
-    direction.normalize();
-    newEnemyPos=direction;
+    //store player's position into a PVector variable
+    playerPos = new PVector(playerX,playerY);
+    //gets the subraction between player's position and enemy's position
+    newEnemyPos = new PVector(playerPos.x-enemyPos.x,playerPos.y-enemyPos.y);
+    //normalize the vector
+    newEnemyPos.normalize();
+    //multiplay the vector for the enemy's speed
     newEnemyPos.mult(speed);
+    //add the new vector to the enemy's previous position
     enemyPos.add(newEnemyPos);
+    //calls the function to draw the enemy
     drawEnemy();
-    if (!shoot)
-    {
-      shoot=!shoot;
-      bulletPos=enemyPos;
-      bulletDir=direction;
-      bulletDir.mult(speed*2);
-    } else
-    {
-      shoot=bullet(bulletPos, bulletDir);
-    }
   }
 
+  //function to draw the enemy
   private void drawEnemy()
   {
+    //fill with the enemy's color based on type of enemy
     fill(enemyColor);
+    //draws the enemy
     ellipse(enemyPos.x, enemyPos.y, 40, 40);
   }
-
-  private boolean bullet(PVector bulletPos, PVector bulletDir)
-  {  
-    fill(255);
-    bulletPos.add(bulletDir);
-    ellipse(bulletPos.x, bulletPos.y, 10, 10);
-    if (bulletPos.x>width || bulletPos.y<0 || bulletPos.y>height || bulletPos.y<0)
-    {
-      shoot=!shoot;
-    }
-    return shoot;
-  }
-
-  private int[] initialPos()
+  
+  //function to gets the initial position of the enemy
+  private PVector initialPos()
   {
-    int x=int(random(0, 1));
-    int y=int(random(0, 1));
-    int pos[]=new int[2];
-    if (y==1)
+    //function variable
+    int sides,randomX,randomY,x,y;
+    PVector initialPos;
+    //gets a random side between the axis
+    sides=int(random(0,2));
+    //axis x
+    if(sides==0)
     {
-      pos[0]=0;
-    } else
-    {
-      pos[0]=height;
+      //gets a random side between right and left
+      randomX=int(random(0,2));
+      //right side
+      if(randomX==0)
+      {
+        x=width+150;
+        //x=int(random(width,width+150));
+      }
+      //left side
+      else
+      {
+        x=-150;
+      }
+      //random y position
+      y=int(random(0,height));
     }
-    if (x==1)
+    //axis y
+    else
     {
-      pos[1]=0;
-    } else
-    {
-      pos[1]=width;
+      //gets a random side between top and bottom
+      randomY=int(random(0,2));
+      //bottom
+      if(randomY==0)
+      {
+        y=height+150;
+      }
+      //top
+      else
+      {
+        y=-150;
+      }
+      //random x position
+      x=int(random(0,width));
     }
-    return pos;
+    //store the x and y position in a vector and returns the vector
+    initialPos= new PVector(x,y);
+    return initialPos;
   }
+  
 }
